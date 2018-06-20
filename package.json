@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",

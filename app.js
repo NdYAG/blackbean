@@ -2,13 +2,19 @@ const Koa = require('koa')
 const Router = require('koa-router')
 const bodyParser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const util = require('util')
+const exec = util.promisify(require('child_process').exec)
 
 const app = new Koa()
 const router = new Router()
 
 // { "command": "" }
 router.post('/call', async ctx => {
-  const body = JSON.parse(ctx.request.body)
+  const body = ctx.request.body
+  // TODO: white list of command
+  const { command } = body
+  const { stdout, stderr } = await exec(`python BlackBeanControl/BlackBeanControl.py -c '${command}'`)
+  ctx.body = 'ok'
 })
 
 app.use(logger())
